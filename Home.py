@@ -2,6 +2,7 @@ import streamlit as st
 from read_files import gerar_layout_eco
 import pandas as pd
 import time
+
 st.set_page_config(page_title="Sync", page_icon=":robot:", layout='wide')
 
 
@@ -17,8 +18,9 @@ def main():
             if st.button('Importar'):
                 # st.write(arquivo_file)
 
-                df = gerar_layout_eco(data_vencimento.replace('/', ''), planilha=arquivo_file)
+                df, layout_texto = gerar_layout_eco(data_vencimento.replace('/', ''), planilha=arquivo_file)
                 st.dataframe(df)
+                st.write(layout_texto)
                 
                 # Convertendo o DataFrame para CSV
                 csv = df['Linha'].to_csv(index=False, header=False)
@@ -30,6 +32,11 @@ def main():
                     file_name="layout.csv",
                     mime="text/csv"
                 )
+                st.download_button(
+                    label='Baixar Layout txt',
+                    data=layout_texto,
+                    file_name='layout.txt',
+                    icon=':material/exit_to_app:')
     
     with tab2:
         tab21, tab22 = st.tabs(['Cadastro Funcionarios', 'Depara Contas'])

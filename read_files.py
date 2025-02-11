@@ -44,28 +44,33 @@ def gerar_layout_eco(data_vencimento, planilha):
 
     # Unificar as informações em uma lista ja no modelo da planilha de gerador de linha
     dados_gerador_linhas = []
-
+    layout_texto = ''
     # transformar df proventos em lista e deixar no formato do gerador de linhas
     lista_df_proventos = df_merge_p.values.tolist()
     for dado in lista_df_proventos:
+        # print(str(round(dado[7], 2)))
+        valor_lancamento = f"{dado[7]:,.2f}".replace('.', '').replace(',', '')
         dados_gerador_linhas.append(
             [
-                f"{dado[1]}", "CTB", "000001", "0", f"{data_vencimento}", "000000", "000000", f"{str(round(dado[7], 2)).replace('.', '')}",
+                f"{dado[1]}", "CTB", "000001", "0", f"{data_vencimento}", "000000", "000000", f"{valor_lancamento}",
                 "P09", f"{str(dado[9]).zfill(6)}", f"{dado[-1].replace('.', '')}", "000000", f"FOLHA PAGAMENTO - {dado[17]}",
-                f"CTB;000001;0;{data_vencimento};000000;000000;{str(round(dado[7], 2)).replace('.', '')};P09;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}"
+                f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};P09;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}"
             ]
         )
+        layout_texto += f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};P09;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}\n"
 
     # transformar df proventos em lista e deixar no formato do gerador de linhas
     lista_df_descontos = df_merge_d.values.tolist()
     for dado in lista_df_descontos:
+        valor_lancamento = f"{dado[7]:,.2f}".replace('.', '').replace(',', '')
         dados_gerador_linhas.append(
             [
-                f"{dado[1]}", "CTB", "000001", "0", f"{data_vencimento}", "000000", "000000", f"{str(round(dado[7], 2)).replace('.', '')}",
-                "P09", f"{str(dado[9]).zfill(6)}", f"{dado[-1].replace('.', '')}", "000000", f"FOLHA PAGAMENTO - {dado[17]}",
-                f"CTB;000001;0;{data_vencimento};000000;000000;{str(round(dado[7], 2)).replace('.', '')};P09;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}"
+                f"{dado[1]}", "CTB", "000001", "0", f"{data_vencimento}", "000000", "000000", f"{valor_lancamento}",
+                "R013", f"{str(dado[9]).zfill(6)}", f"{dado[-1].replace('.', '')}", "000000", f"FOLHA PAGAMENTO - {dado[17]}",
+                f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};R013;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}"
             ]
         )
+        layout_texto += f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};R013;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}\n"
 
 
     # Definindo as colunas
@@ -76,4 +81,4 @@ def gerar_layout_eco(data_vencimento, planilha):
     # df_gerador.to_excel('Gerador_linhas_layout.xlsx', index=False)
     # df_gerador['Linha'].loc[1:].to_csv('layout.csv', index=False, header=False)
 
-    return df_gerador
+    return df_gerador, layout_texto
