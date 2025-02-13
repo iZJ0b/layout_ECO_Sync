@@ -66,11 +66,11 @@ def gerar_layout_eco(data_vencimento, planilha):
         dados_gerador_linhas.append(
             [
                 f"{dado[1]}", "CTB", "000001", "0", f"{data_vencimento}", "000000", "000000", f"{valor_lancamento}",
-                "R013", f"{str(dado[9]).zfill(6)}", f"{dado[-1].replace('.', '')}", "000000", f"FOLHA PAGAMENTO - {dado[17]}",
-                f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};R013;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}"
+                "R13", f"{str(dado[9]).zfill(6)}", f"{dado[-1].replace('.', '')}", "000000", f"FOLHA PAGAMENTO - {dado[17]}",
+                f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};R13;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}"
             ]
         )
-        layout_texto += f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};R013;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}\n"
+        layout_texto += f"CTB;000001;0;{data_vencimento};000000;000000;{valor_lancamento};R13;{str(dado[9]).zfill(6)};{dado[-1].replace('.', '')};000000;FOLHA PAGAMENTO - {dado[17]}\n"
 
 
     # Definindo as colunas
